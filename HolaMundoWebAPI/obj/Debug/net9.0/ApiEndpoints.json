@@ -390,6 +390,149 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BibliotecaAPI.Controllers.LibrosController",
+    "Method": "ObtenerListadoUsandoToken",
+    "RelativePath": "api/libros/listado/{token}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [],
+    "EndpointName": "ObtenerListadoLibrosUsandoToken"
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.LibrosController",
+    "Method": "ObtenerTokenListado",
+    "RelativePath": "api/libros/listado/obtener-token",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.SeguridadController",
+    "Method": "Desencriptar",
+    "RelativePath": "api/seguridad/desencriptar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "textoCifrado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.SeguridadController",
+    "Method": "DesencriptarLimitadoPorTiempo",
+    "RelativePath": "api/seguridad/desencriptar-limitadoPorTiempo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "textoCifrado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.SeguridadController",
+    "Method": "Encriptar",
+    "RelativePath": "api/seguridad/encriptar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "textoPlano",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.SeguridadController",
+    "Method": "EncriptarLimitadoPorTiempo",
+    "RelativePath": "api/seguridad/encriptar-limitadoPorTiempo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "textoPlano",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.UsuariosController",
+    "Method": "Get",
+    "RelativePath": "api/usuarios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[BibliotecaAPI.DTOs.UsuarioDTO, BibliotecaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.UsuariosController",
+    "Method": "Put",
+    "RelativePath": "api/usuarios",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "actualizarUsuarioDTO",
+        "Type": "BibliotecaAPI.DTOs.ActualizarUsuarioDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.UsuariosController",
+    "Method": "HacerAdmin",
+    "RelativePath": "api/usuarios/hacer-admin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "editarClaimDTO",
+        "Type": "BibliotecaAPI.DTOs.EditarClaimDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BibliotecaAPI.Controllers.UsuariosController",
     "Method": "Login",
     "RelativePath": "api/usuarios/login",
@@ -429,6 +572,42 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": [
+      {
+        "Type": "BibliotecaAPI.DTOs.RespuestaAutenticacionDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.UsuariosController",
+    "Method": "RemoverAdmin",
+    "RelativePath": "api/usuarios/remover-admin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "editarClaimDTO",
+        "Type": "BibliotecaAPI.DTOs.EditarClaimDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.UsuariosController",
+    "Method": "RenovarToken",
+    "RelativePath": "api/usuarios/renovar-token",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "BibliotecaAPI.DTOs.RespuestaAutenticacionDTO",

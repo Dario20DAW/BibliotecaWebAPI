@@ -13,7 +13,8 @@ namespace BibliotecaAPI.Controllers
 
     [ApiController]
     [Route("api/autores")]
-    [Authorize]
+    [Authorize(Policy = "esadmin")]
+
     public class AutoresController: ControllerBase
     {
 

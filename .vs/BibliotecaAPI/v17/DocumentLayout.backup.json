@@ -3,16 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|c:\\users\\t-cobro\\source\\repos\\holamundowebapi\\holamundowebapi\\controllers\\libroscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|solutionrelative:holamundowebapi\\controllers\\libroscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|c:\\users\\t-cobro\\source\\repos\\holamundowebapi\\holamundowebapi\\controllers\\seguridadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|solutionrelative:holamundowebapi\\controllers\\seguridadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|c:\\users\\t-cobro\\source\\repos\\holamundowebapi\\holamundowebapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|solutionrelative:holamundowebapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|c:\\users\\t-cobro\\source\\repos\\holamundowebapi\\holamundowebapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|solutionrelative:holamundowebapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|c:\\users\\t-cobro\\source\\repos\\holamundowebapi\\holamundowebapi\\utilidades\\automapperprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|solutionrelative:holamundowebapi\\utilidades\\automapperprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|c:\\users\\t-cobro\\source\\repos\\holamundowebapi\\holamundowebapi\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|solutionrelative:holamundowebapi\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|c:\\users\\t-cobro\\source\\repos\\holamundowebapi\\holamundowebapi\\dtos\\respuestaautenticaciondto\u002B.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|solutionrelative:holamundowebapi\\dtos\\respuestaautenticaciondto\u002B.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|c:\\users\\t-cobro\\source\\repos\\holamundowebapi\\holamundowebapi\\dtos\\credencialesusuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|solutionrelative:holamundowebapi\\dtos\\credencialesusuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|c:\\users\\t-cobro\\source\\repos\\holamundowebapi\\holamundowebapi\\dtos\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A9E949F-464C-4C5B-84F0-3841A861FE3C}|HolaMundoWebAPI\\BibliotecaAPI.csproj|solutionrelative:holamundowebapi\\dtos\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,40 +43,92 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UsuariosController.cs",
-              "DocumentMoniker": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Controllers\\UsuariosController.cs",
-              "RelativeDocumentMoniker": "HolaMundoWebAPI\\Controllers\\UsuariosController.cs",
-              "ToolTip": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Controllers\\UsuariosController.cs",
-              "RelativeToolTip": "HolaMundoWebAPI\\Controllers\\UsuariosController.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAEUAAAAfAAAAAAAAAA==",
+              "Title": "LibrosController.cs",
+              "DocumentMoniker": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Controllers\\LibrosController.cs",
+              "RelativeDocumentMoniker": "HolaMundoWebAPI\\Controllers\\LibrosController.cs",
+              "ToolTip": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Controllers\\LibrosController.cs",
+              "RelativeToolTip": "HolaMundoWebAPI\\Controllers\\LibrosController.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAQwCIAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T12:06:09.997Z",
+              "WhenOpened": "2025-04-08T11:33:08.05Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "RespuestaAutenticacionDTO\u002B.cs",
-              "DocumentMoniker": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\DTOs\\RespuestaAutenticacionDTO\u002B.cs",
-              "RelativeDocumentMoniker": "HolaMundoWebAPI\\DTOs\\RespuestaAutenticacionDTO\u002B.cs",
-              "ToolTip": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\DTOs\\RespuestaAutenticacionDTO\u002B.cs",
-              "RelativeToolTip": "HolaMundoWebAPI\\DTOs\\RespuestaAutenticacionDTO\u002B.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAqAAAAAAAAAA==",
+              "Title": "SeguridadController.cs",
+              "DocumentMoniker": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Controllers\\SeguridadController.cs",
+              "RelativeDocumentMoniker": "HolaMundoWebAPI\\Controllers\\SeguridadController.cs",
+              "ToolTip": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Controllers\\SeguridadController.cs",
+              "RelativeToolTip": "HolaMundoWebAPI\\Controllers\\SeguridadController.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAUwCwAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T12:05:10.187Z",
+              "WhenOpened": "2025-04-08T10:48:37.426Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "HolaMundoWebAPI\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\appsettings.Development.json",
+              "RelativeToolTip": "HolaMundoWebAPI\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-08T10:12:50.046Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "CredencialesUsuarioDTO.cs",
-              "DocumentMoniker": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\DTOs\\CredencialesUsuarioDTO.cs",
-              "RelativeDocumentMoniker": "HolaMundoWebAPI\\DTOs\\CredencialesUsuarioDTO.cs",
-              "ToolTip": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\DTOs\\CredencialesUsuarioDTO.cs",
-              "RelativeToolTip": "HolaMundoWebAPI\\DTOs\\CredencialesUsuarioDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAASAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Program.cs",
+              "RelativeDocumentMoniker": "HolaMundoWebAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Program.cs",
+              "RelativeToolTip": "HolaMundoWebAPI\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T12:03:37.21Z",
+              "WhenOpened": "2025-04-08T09:37:23.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AutoMapperProfiles.cs",
+              "DocumentMoniker": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Utilidades\\AutoMapperProfiles.cs",
+              "RelativeDocumentMoniker": "HolaMundoWebAPI\\Utilidades\\AutoMapperProfiles.cs",
+              "ToolTip": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Utilidades\\AutoMapperProfiles.cs",
+              "RelativeToolTip": "HolaMundoWebAPI\\Utilidades\\AutoMapperProfiles.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAgwEkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T09:17:18.061Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UsuarioDTO.cs",
+              "DocumentMoniker": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\DTOs\\UsuarioDTO.cs",
+              "RelativeDocumentMoniker": "HolaMundoWebAPI\\DTOs\\UsuarioDTO.cs",
+              "ToolTip": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\DTOs\\UsuarioDTO.cs",
+              "RelativeToolTip": "HolaMundoWebAPI\\DTOs\\UsuarioDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T09:14:07.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "HolaMundoWebAPI\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "HolaMundoWebAPI\\Controllers\\UsuariosController.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAQwDYAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T12:06:09.997Z",
               "EditorCaption": ""
             }
           ]

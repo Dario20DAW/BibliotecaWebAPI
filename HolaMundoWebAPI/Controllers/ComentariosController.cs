@@ -2,6 +2,7 @@
 using BibliotecaAPI.Datos;
 using BibliotecaAPI.DTOs;
 using BibliotecaAPI.Entidades;
+using BibliotecaAPI.Servicios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,14 @@ namespace BibliotecaAPI.Controllers
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
+        private readonly IServicioUsuarios servicioUsuarios;
 
-        public ComentariosController(ApplicationDbContext context, IMapper mapper)
+        public ComentariosController(ApplicationDbContext context, IMapper mapper,
+            IServicioUsuarios servicioUsuarios)
         {
             this.context = context;
             this.mapper = mapper;
+            this.servicioUsuarios = servicioUsuarios;
         }
 
         [HttpGet]
@@ -35,6 +39,7 @@ namespace BibliotecaAPI.Controllers
             }
 
             var comentarios = await context.Comentarios
+                .Include(x => x.Usuario)
                 .Where(x => x.libroId == libroId)
                 .OrderByDescending(x => x.FechaPublicacion)
                 .ToListAsync();
@@ -47,7 +52,9 @@ namespace BibliotecaAPI.Controllers
         [HttpGet("{id}", Name = "ObtenerComentario")]
         public async Task<ActionResult<ComentarioDTO>> Get(Guid id)
         {
-            var comentario = await context.Comentarios.FirstOrDefaultAsync(x => x.id == id);
+            var comentario = await context.Comentarios
+                .Include (x => x.Usuario)
+                .FirstOrDefaultAsync(x => x.id == id);
             if (comentario == null)
             {
                 return NotFound();
@@ -66,9 +73,17 @@ namespace BibliotecaAPI.Controllers
                 return NotFound();
             }
 
+            var usuario = await servicioUsuarios.ObtenerUsuario();
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
             var comentario = mapper.Map<Comentario>(comentarioCrearDTO);
             comentario.libroId = libroId;
             comentario.FechaPublicacion = DateTime.UtcNow;
+            comentario.UsuarioId = usuario.Id;
 
             context.Add(comentario);
             await  context.SaveChangesAsync();
@@ -93,12 +108,23 @@ namespace BibliotecaAPI.Controllers
                 return NotFound();
             }
 
+            var usuario = await servicioUsuarios.ObtenerUsuario();
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
 
             var comentarioDb = await context.Comentarios.FirstOrDefaultAsync(x => x.id == id);
 
             if (comentarioDb is null)
             {
                 return NotFound();
+            }
+
+            if (comentarioDb.UsuarioId != usuario.Id)
+            {
+                return Forbid();
             }
 
             var comentarioPatchDTO = mapper.Map<ComentarioPatchDTO>(comentarioDb);
@@ -129,13 +155,31 @@ namespace BibliotecaAPI.Controllers
                 return NotFound();
             }
 
-            var registrosBorrados = await context.Comentarios.Where(x => x.id == id)
-                                    .ExecuteDeleteAsync();
+            var usuario = await servicioUsuarios.ObtenerUsuario();
 
-            if(registrosBorrados == 0)
+            if (usuario == null)
             {
                 return NotFound();
             }
+
+
+            var comentarioDB = await context.Comentarios
+                .FirstOrDefaultAsync(x => x.id == id);
+            
+            if (comentarioDB == null)
+            {
+                return NotFound();
+            }
+
+            if (comentarioDB.UsuarioId != usuario.Id)
+            {
+                return Forbid();
+            }
+
+            context.Remove(comentarioDB);
+            await context.SaveChangesAsync();
+
+
             return NoContent();
         }
     }

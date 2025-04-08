@@ -55,9 +55,15 @@ namespace BibliotecaAPI.Utilidades
 
 
             CreateMap<ComentarioDTO, Comentario>();
-            CreateMap<Comentario, ComentarioDTO>();
+            CreateMap<Comentario, ComentarioDTO>()
+                .ForMember(dto => dto.UsuarioEmail, config => config
+                .MapFrom(ent => ent.Usuario!.Email));
             CreateMap<ComentarioCrearDTO, Comentario>();
             CreateMap<ComentarioPatchDTO, Comentario>().ReverseMap();
+
+
+            CreateMap<Usuario, UsuarioDTO>();
+
         }
 
         private string MapearNombreYApellido(Autor autor) =>  $"{autor.Nombres} {autor.Apellidos}";

@@ -2,13 +2,28 @@ using System.Text;
 using System.Text.Json.Serialization;
 using BibliotecaAPI;
 using BibliotecaAPI.Datos;
+using BibliotecaAPI.Entidades;
+using BibliotecaAPI.Servicios;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDataProtection();
+        
 
+var origenesPermitidos = builder.Configuration.GetSection("origenesPermitidos").Get<string[]>()!;  
+
+
+builder.Services.AddCors(opciones  =>
+{
+    opciones.AddDefaultPolicy(opcionesCors =>
+    {
+        opcionesCors.WithOrigins(origenesPermitidos).AllowAnyMethod().AllowAnyHeader()
+        .WithExposedHeaders("mi-cabecera");
+    });
+});
 
 // Configura el servicio para usar controladores y agregar soporte para NewtonsoftJson (JSON más flexible)
 builder.Services.AddControllers().AddNewtonsoftJson();
@@ -26,7 +41,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 
 // Configura la autenticación de usuario utilizando Identity para manejo de usuarios, roles y tokens en la base de datos
-builder.Services.AddIdentityCore<IdentityUser>()
+builder.Services.AddIdentityCore<Usuario>()
     .AddEntityFrameworkStores<ApplicationDbContext>() // Usa la base de datos para el almacenamiento de usuarios
     .AddDefaultTokenProviders(); // Proporciona generadores de tokens predeterminados para la autenticación
 
@@ -34,11 +49,11 @@ builder.Services.AddIdentityCore<IdentityUser>()
 
 
 // Registra servicios adicionales para el manejo de usuarios y autenticación
-builder.Services.AddScoped<UserManager<IdentityUser>>(); // Maneja la creación y gestión de usuarios
-builder.Services.AddScoped<SignInManager<IdentityUser>>(); // Gestiona el inicio de sesión de usuarios
+builder.Services.AddScoped<UserManager<Usuario>>(); // Maneja la creación y gestión de usuarios
+builder.Services.AddScoped<SignInManager<Usuario>>(); // Gestiona el inicio de sesión de usuarios
+builder.Services.AddTransient<IServicioUsuarios, ServicioUsuarios>();
+
 builder.Services.AddHttpContextAccessor(); // Proporciona acceso al contexto HTTP en cualquier parte de la aplicación
-
-
 
 // Configura la autenticación mediante JWT (JSON Web Tokens) para validación de tokens
 builder.Services.AddAuthentication().AddJwtBearer(opciones =>
@@ -58,6 +73,12 @@ builder.Services.AddAuthentication().AddJwtBearer(opciones =>
     };
 });
 
+
+builder.Services.AddAuthorization(opciones =>
+{
+    opciones.AddPolicy("esadmin", politica => politica.RequireClaim("esadmin"));
+
+});
 
 
 
@@ -80,6 +101,18 @@ app.Use(async (contexto, next) =>
         await next.Invoke(); // Pasa al siguiente middleware si la ruta no es "/bloqueado"
     }
 });
+
+
+app.Use(async (contexto, next) =>
+{
+    contexto.Response.Headers.Append("mi-cabecera", "valor");
+
+    await next();
+});
+
+
+
+app.UseCors();
 
 // Mapea las rutas de los controladores para que la aplicación sepa cómo manejarlas
 app.MapControllers();

@@ -170,3 +170,4 @@ C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\M
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\BibliotecaAPI.sourcelink.json
