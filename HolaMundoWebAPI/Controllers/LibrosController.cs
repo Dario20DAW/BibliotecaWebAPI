@@ -2,6 +2,7 @@
 using BibliotecaAPI.Datos;
 using BibliotecaAPI.DTOs;
 using BibliotecaAPI.Entidades;
+using BibliotecaAPI.Utilidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
@@ -70,17 +71,25 @@ namespace BibliotecaAPI.Controllers
 
 
         [HttpGet]
-        public async Task<IEnumerable<LibroDTO>> Get()
+        [AllowAnonymous]
+        public async Task<IEnumerable<LibroDTO>> Get([FromQuery] PaginacionDTO paginacionDTO)
         {
-            var libros = await _context.Libros.ToListAsync();
-            var librosDTO = _mapper.Map<IEnumerable<LibroDTO>>(libros);
+            
+            
 
+            var queryable = _context.Libros.AsQueryable();
+            await HttpContext.InsertarParametrosPaginacionEnCabecera(queryable);
+            var libros = await queryable
+                                .OrderBy(x => x.Titulo)
+                                .Paginar(paginacionDTO).ToListAsync();
+            var librosDTO = _mapper.Map<IEnumerable<LibroDTO>>(libros);
             return librosDTO;
 
         }
 
 
         [HttpGet("{id:int}", Name = "ObtenerLibro")]
+        [AllowAnonymous]
         public async Task<ActionResult<LibroConAutoresDTO>> Get(int id)
         {
             var libro = await _context.Libros

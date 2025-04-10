@@ -35,6 +35,10 @@ namespace BibliotecaAPI.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<string>("Foto")
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
+
                     b.Property<string>("Identificacion")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");

@@ -10,18 +10,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 
 namespace BibliotecaAPI.Controllers
 {
-
-
     [ApiController]
     [Route("api/usuarios")]
-
     public class UsuariosController : ControllerBase
     {
+        // Inyección de dependencias necesarias para gestión de usuarios, autenticación, mapeo, etc.
         private readonly UserManager<Usuario> userManager;
         private readonly IConfiguration configuration;
         private readonly SignInManager<Usuario> signInManager;
@@ -44,7 +41,7 @@ namespace BibliotecaAPI.Controllers
             this.mapper = mapper;
         }
 
-
+        // Solo los usuarios con el claim "esadmin" pueden obtener la lista de usuarios.
         [HttpGet]
         [Authorize(Policy = "esadmin")]
         public async Task<IEnumerable<UsuarioDTO>> Get()
@@ -53,13 +50,9 @@ namespace BibliotecaAPI.Controllers
             var usuariosDTO = mapper.Map<IEnumerable<UsuarioDTO>>(usuarios);
 
             return usuariosDTO;
-
         }
 
-
-
-
-
+        // Registro de nuevo usuario. Retorna un token JWT si el registro fue exitoso.
         [HttpPost("registro")]
         public async Task<ActionResult<RespuestaAutenticacionDTO>> Registrar(
             CredencialesUsuarioDTO credencialesUsuarioDTO)
@@ -69,19 +62,18 @@ namespace BibliotecaAPI.Controllers
                 UserName = credencialesUsuarioDTO.Email,
                 Email = credencialesUsuarioDTO.Email
             };
-                
-            var resultado = await userManager
-                .CreateAsync(Usuario, credencialesUsuarioDTO.Password!);
 
-            if(resultado.Succeeded)
+            var resultado = await userManager.CreateAsync(Usuario, credencialesUsuarioDTO.Password!);
+
+            if (resultado.Succeeded)
             {
                 var respuestaAutenticacion = await ConstruirToken(credencialesUsuarioDTO);
                 return respuestaAutenticacion;
-
             }
             else
             {
-                foreach(var error in resultado.Errors)
+                // Si hubo errores durante el registro, se agregan al ModelState.
+                foreach (var error in resultado.Errors)
                 {
                     ModelState.AddModelError(String.Empty, error.Description);
                 }
@@ -90,36 +82,34 @@ namespace BibliotecaAPI.Controllers
             }
         }
 
+        // Login de usuario. Retorna un token JWT si las credenciales son válidas.
         [HttpPost("login")]
-
         public async Task<ActionResult<RespuestaAutenticacionDTO>> Login(
             CredencialesUsuarioDTO credencialesUsuarioDTO)
-        { 
-
+        {
             var usuario = await userManager.FindByEmailAsync(credencialesUsuarioDTO.Email);
 
-            if(usuario is null)
+            if (usuario is null)
             {
                 return RetornarLoginIncorrecto();
             }
 
-            var resultado = await signInManager.CheckPasswordSignInAsync(usuario, 
+            var resultado = await signInManager.CheckPasswordSignInAsync(usuario,
                 credencialesUsuarioDTO.Password!, lockoutOnFailure: false);
 
-            if (resultado.Succeeded) 
+            if (resultado.Succeeded)
             {
                 return await ConstruirToken(credencialesUsuarioDTO);
             }
-
             else
             {
                 return RetornarLoginIncorrecto();
             }
         }
 
-
+        // Agrega el claim "esadmin" a un usuario (lo hace administrador).
         [HttpPost("hacer-admin")]
-        //[Authorize(Policy = "esadmin")]
+        // [Authorize(Policy = "esadmin")] ← Se puede descomentar para que solo admins puedan hacer esto.
         public async Task<ActionResult> HacerAdmin(EditarClaimDTO editarClaimDTO)
         {
             var usuario = await userManager.FindByEmailAsync(editarClaimDTO.Email);
@@ -133,7 +123,7 @@ namespace BibliotecaAPI.Controllers
             return NoContent();
         }
 
-
+        // Remueve el claim "esadmin" de un usuario.
         [HttpPost("remover-admin")]
         [Authorize(Policy = "esadmin")]
         public async Task<ActionResult> RemoverAdmin(EditarClaimDTO editarClaimDTO)
@@ -149,8 +139,7 @@ namespace BibliotecaAPI.Controllers
             return NoContent();
         }
 
-
-
+        // Renovar token para un usuario autenticado (ya logueado).
         [HttpGet("renovar-token")]
         [Authorize]
         public async Task<ActionResult<RespuestaAutenticacionDTO>> RenovarToken()
@@ -168,14 +157,12 @@ namespace BibliotecaAPI.Controllers
             return respuestaAutenticacion;
         }
 
-
-
+        // Actualizar datos del usuario autenticado (por ejemplo, fecha de nacimiento).
         [HttpPut]
         [Authorize]
         public async Task<ActionResult> Put(ActualizarUsuarioDTO actualizarUsuarioDTO)
         {
             var usuario = await servicioUsuarios.ObtenerUsuario();
-
 
             if (usuario is null)
             {
@@ -183,41 +170,40 @@ namespace BibliotecaAPI.Controllers
             }
 
             usuario.FechaNacimiento = actualizarUsuarioDTO.FechaNacimiento;
-
             await userManager.UpdateAsync(usuario);
 
             return NoContent();
         }
 
-
-
+        // Método privado para retornar error de login incorrecto.
         private ActionResult RetornarLoginIncorrecto()
         {
             ModelState.AddModelError(String.Empty, "Login incorrecto");
             return ValidationProblem();
         }
 
-
-        private async Task<RespuestaAutenticacionDTO> ConstruirToken(
-            CredencialesUsuarioDTO credencialesUsuarioDTO)
+        // Método que construye el JWT (token) con claims personalizados.
+        private async Task<RespuestaAutenticacionDTO> ConstruirToken(CredencialesUsuarioDTO credencialesUsuarioDTO)
         {
             var claims = new List<Claim>
             {
                 new Claim("email", credencialesUsuarioDTO.Email),
-                new Claim("lo que yo quiera", "valor aaa")
-
+                new Claim("lo que yo quiera", "valor aaa") // Ejemplo de claim adicional personalizado
             };
 
+            // Se obtienen los claims del usuario desde la base de datos
             var usuario = await userManager.FindByEmailAsync(credencialesUsuarioDTO.Email);
             var claimsDB = await userManager.GetClaimsAsync(usuario!);
 
             claims.AddRange(claimsDB);
 
+            // Clave secreta para firmar el token, tomada de la configuración (appsettings.json)
             var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                 configuration["llavejwt"]!));
 
             var credenciales = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
 
+            // Duración del token (en este caso, 2 años)
             var expiracion = DateTime.UtcNow.AddYears(2);
 
             var tokeDeSeguridad = new JwtSecurityToken(
@@ -226,16 +212,15 @@ namespace BibliotecaAPI.Controllers
                 claims: claims,
                 expires: expiracion,
                 signingCredentials: credenciales
-                );
+            );
 
-            var token = new JwtSecurityTokenHandler().WriteToken( tokeDeSeguridad );
+            var token = new JwtSecurityTokenHandler().WriteToken(tokeDeSeguridad);
 
             return new RespuestaAutenticacionDTO
             {
-                Token = token, 
+                Token = token,
                 Expiracion = expiracion,
             };
         }
-
     }
 }

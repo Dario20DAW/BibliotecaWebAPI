@@ -6,6 +6,7 @@
         public int Id { get; set; }
 
         public required String NombreCompleto { get; set; }
+        public string? Foto { get; set; }
 
     }
 }

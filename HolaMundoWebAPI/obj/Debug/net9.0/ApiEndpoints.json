@@ -6,7 +6,18 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "Pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "RecordsPorPagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[BibliotecaAPI.DTOs.AutorDTO, BibliotecaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
@@ -103,7 +114,9 @@
         "StatusCode": 200
       }
     ],
-    "EndpointName": "ObtenerAutor"
+    "EndpointName": "ObtenerAutor",
+    "Description": "Obtiene autor por id y sus libros, si no existe se devuelve 404",
+    "Summary": "Obtiene autor por Id"
   },
   {
     "ContainingType": "BibliotecaAPI.Controllers.AutoresController",
@@ -170,7 +183,18 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "Pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "RecordsPorPagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[BibliotecaAPI.DTOs.LibroDTO, BibliotecaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
@@ -468,6 +492,22 @@
     "ContainingType": "BibliotecaAPI.Controllers.SeguridadController",
     "Method": "EncriptarLimitadoPorTiempo",
     "RelativePath": "api/seguridad/encriptar-limitadoPorTiempo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "textoPlano",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.SeguridadController",
+    "Method": "Hash",
+    "RelativePath": "api/seguridad/hash",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

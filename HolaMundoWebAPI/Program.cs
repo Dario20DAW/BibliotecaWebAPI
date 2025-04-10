@@ -4,9 +4,11 @@ using BibliotecaAPI;
 using BibliotecaAPI.Datos;
 using BibliotecaAPI.Entidades;
 using BibliotecaAPI.Servicios;
+using BibliotecaAPI.Swagger;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +23,7 @@ builder.Services.AddCors(opciones  =>
     opciones.AddDefaultPolicy(opcionesCors =>
     {
         opcionesCors.WithOrigins(origenesPermitidos).AllowAnyMethod().AllowAnyHeader()
-        .WithExposedHeaders("mi-cabecera");
+        .WithExposedHeaders("cantidad-total-registros");
     });
 });
 
@@ -52,6 +54,9 @@ builder.Services.AddIdentityCore<Usuario>()
 builder.Services.AddScoped<UserManager<Usuario>>(); // Maneja la creación y gestión de usuarios
 builder.Services.AddScoped<SignInManager<Usuario>>(); // Gestiona el inicio de sesión de usuarios
 builder.Services.AddTransient<IServicioUsuarios, ServicioUsuarios>();
+builder.Services.AddTransient<IServicioHash, ServicioHash>();
+
+
 
 builder.Services.AddHttpContextAccessor(); // Proporciona acceso al contexto HTTP en cualquier parte de la aplicación
 
@@ -80,6 +85,22 @@ builder.Services.AddAuthorization(opciones =>
 
 });
 
+
+builder.Services.AddSwaggerGen(opciones =>
+{
+    opciones.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Aithorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+    });
+
+    opciones.OperationFilter<FiltroAutorizacion>();
+
+
+});
 
 
 
@@ -110,6 +131,9 @@ app.Use(async (contexto, next) =>
     await next();
 });
 
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 
 app.UseCors();
