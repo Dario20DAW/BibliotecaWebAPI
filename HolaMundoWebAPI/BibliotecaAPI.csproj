@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.24.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.3" />
@@ -18,9 +19,11 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="8.1.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\" />
     <Folder Include="Repositorio\" />
   </ItemGroup>
 

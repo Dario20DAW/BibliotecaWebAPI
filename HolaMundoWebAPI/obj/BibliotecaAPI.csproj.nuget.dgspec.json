@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[14.0.0, )"
             },
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.24.0, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[9.0.3, )"
@@ -83,6 +87,10 @@
             "Swashbuckle.AspNetCore.Swagger": {
               "target": "Package",
               "version": "[8.1.0, )"
+            },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.6.0.2, )"
             }
           },
           "imports": [

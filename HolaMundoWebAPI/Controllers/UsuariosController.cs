@@ -41,6 +41,26 @@ namespace BibliotecaAPI.Controllers
             this.mapper = mapper;
         }
 
+
+        //[HttpGet("ver-claims")]
+        //[AllowAnonymous]
+        //public IActionResult VerClaims()
+        //{
+        //    var claims = User.Claims.Select(c => new { c.Type, c.Value });
+        //    return Ok(claims);
+        //}
+
+        //[HttpGet("probar-auth")]
+        //public IActionResult ProbarAuth()
+        //{
+        //    return Ok(new
+        //    {
+        //        EstaAutenticado = User.Identity?.IsAuthenticated ?? false,
+        //        Claims = User.Claims.Select(c => new { c.Type, c.Value })
+        //    });
+        //}
+
+
         // Solo los usuarios con el claim "esadmin" pueden obtener la lista de usuarios.
         [HttpGet]
         [Authorize(Policy = "esadmin")]
@@ -188,7 +208,6 @@ namespace BibliotecaAPI.Controllers
             var claims = new List<Claim>
             {
                 new Claim("email", credencialesUsuarioDTO.Email),
-                new Claim("lo que yo quiera", "valor aaa") // Ejemplo de claim adicional personalizado
             };
 
             // Se obtienen los claims del usuario desde la base de datos

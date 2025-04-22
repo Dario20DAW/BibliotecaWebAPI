@@ -58,12 +58,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "Bearer": [ ]
-          }
-        ]
+        }
       },
       "post": {
         "tags": [
@@ -140,12 +135,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "Bearer": [ ]
-          }
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -164,24 +154,57 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/AutorCrearDTO"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutorCrearDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutorCrearDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutorCrearDTO"
+                "required": [
+                  "Apellidos",
+                  "Nombres"
+                ],
+                "type": "object",
+                "properties": {
+                  "Foto": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Nombres": {
+                    "maxLength": 150,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Apellidos": {
+                    "maxLength": 150,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Identificacion": {
+                    "maxLength": 20,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Libros": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/LibroCrearDTO"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Foto": {
+                  "style": "form"
+                },
+                "Nombres": {
+                  "style": "form"
+                },
+                "Apellidos": {
+                  "style": "form"
+                },
+                "Identificacion": {
+                  "style": "form"
+                },
+                "Libros": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -264,6 +287,177 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/autores/filtrar": {
+      "get": {
+        "tags": [
+          "Autores"
+        ],
+        "parameters": [
+          {
+            "name": "Pagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PaginacionDTO.Pagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PaginacionDTO.RecordsPorPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombres",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Apellidos",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TieneFoto",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "TieneLibros",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "TituloLibro",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncluirLibros",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "CampoOrdenar",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrdenAscendente",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/autores/con-foto": {
+      "post": {
+        "tags": [
+          "Autores"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Apellidos",
+                  "Nombres"
+                ],
+                "type": "object",
+                "properties": {
+                  "Foto": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Nombres": {
+                    "maxLength": 150,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Apellidos": {
+                    "maxLength": 150,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Identificacion": {
+                    "maxLength": 20,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Libros": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/LibroCrearDTO"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Foto": {
+                  "style": "form"
+                },
+                "Nombres": {
+                  "style": "form"
+                },
+                "Apellidos": {
+                  "style": "form"
+                },
+                "Identificacion": {
+                  "style": "form"
+                },
+                "Libros": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -414,12 +608,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "Bearer": [ ]
-          }
-        ]
+        }
       },
       "post": {
         "tags": [
@@ -513,12 +702,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "Bearer": [ ]
-          }
-        ]
+        }
       },
       "patch": {
         "tags": [
@@ -649,12 +833,7 @@
           "200": {
             "description": "OK"
           }
-        },
-        "security": [
-          {
-            "Bearer": [ ]
-          }
-        ]
+        }
       }
     },
     "/api/libros": {
@@ -710,12 +889,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "Bearer": [ ]
-          }
-        ]
+        }
       },
       "post": {
         "tags": [
@@ -790,12 +964,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "Bearer": [ ]
-          }
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -961,6 +1130,30 @@
               "type": "string"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/usuarios/ver-claims": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/usuarios/probar-auth": {
+      "get": {
+        "tags": [
+          "Usuarios"
         ],
         "responses": {
           "200": {
@@ -1275,6 +1468,10 @@
             "type": "string",
             "nullable": true
           },
+          "foto": {
+            "type": "string",
+            "nullable": true
+          },
           "libros": {
             "type": "array",
             "items": {
@@ -1329,6 +1526,10 @@
             "format": "int32"
           },
           "nombreCompleto": {
+            "type": "string",
+            "nullable": true
+          },
+          "foto": {
             "type": "string",
             "nullable": true
           }
@@ -1549,10 +1750,15 @@
     },
     "securitySchemes": {
       "Bearer": {
-        "type": "apiKey",
-        "name": "Aithorization",
-        "in": "header"
+        "type": "http",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
       }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

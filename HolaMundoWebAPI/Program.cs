@@ -1,4 +1,4 @@
-using System.Text;
+锘縰sing System.Text;
 using System.Text.Json.Serialization;
 using BibliotecaAPI;
 using BibliotecaAPI.Datos;
@@ -13,6 +13,10 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDataProtection();
+builder.Services.AddOutputCache(opciones =>
+{
+    opciones.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(15);
+});
         
 
 var origenesPermitidos = builder.Configuration.GetSection("origenesPermitidos").Get<string[]>()!;  
@@ -27,12 +31,12 @@ builder.Services.AddCors(opciones  =>
     });
 });
 
-// Configura el servicio para usar controladores y agregar soporte para NewtonsoftJson (JSON m醩 flexible)
+// Configura el servicio para usar controladores y agregar soporte para NewtonsoftJson (JSON m谩s flexible)
 builder.Services.AddControllers().AddNewtonsoftJson();
 
 
 
-// Configura el contexto de la base de datos con una conexi髇 a SQL Server usando la cadena de conexi髇 "DefaultConnection"
+// Configura el contexto de la base de datos con una conexi贸n a SQL Server usando la cadena de conexi贸n "DefaultConnection"
 builder.Services.AddDbContext<ApplicationDbContext>(opciones => opciones.UseSqlServer("name=DefaultConnection"));
 
 
@@ -42,40 +46,39 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 
 
-// Configura la autenticaci髇 de usuario utilizando Identity para manejo de usuarios, roles y tokens en la base de datos
+// Configura la autenticaci贸n de usuario utilizando Identity para manejo de usuarios, roles y tokens en la base de datos
 builder.Services.AddIdentityCore<Usuario>()
     .AddEntityFrameworkStores<ApplicationDbContext>() // Usa la base de datos para el almacenamiento de usuarios
-    .AddDefaultTokenProviders(); // Proporciona generadores de tokens predeterminados para la autenticaci髇
+    .AddDefaultTokenProviders(); // Proporciona generadores de tokens predeterminados para la autenticaci贸n
 
 
 
 
-// Registra servicios adicionales para el manejo de usuarios y autenticaci髇
-builder.Services.AddScoped<UserManager<Usuario>>(); // Maneja la creaci髇 y gesti髇 de usuarios
-builder.Services.AddScoped<SignInManager<Usuario>>(); // Gestiona el inicio de sesi髇 de usuarios
+// Registra servicios adicionales para el manejo de usuarios y autenticaci贸n
+builder.Services.AddScoped<UserManager<Usuario>>(); // Maneja la creaci贸n y gesti贸n de usuarios
+builder.Services.AddScoped<SignInManager<Usuario>>(); // Gestiona el inicio de sesi贸n de usuarios
 builder.Services.AddTransient<IServicioUsuarios, ServicioUsuarios>();
 builder.Services.AddTransient<IServicioHash, ServicioHash>();
+builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosLocal>();
 
 
+builder.Services.AddHttpContextAccessor(); // Proporciona acceso al contexto HTTP en cualquier parte de la aplicaci贸n
 
-builder.Services.AddHttpContextAccessor(); // Proporciona acceso al contexto HTTP en cualquier parte de la aplicaci髇
-
-// Configura la autenticaci髇 mediante JWT (JSON Web Tokens) para validaci髇 de tokens
+// Configura la autenticaci贸n mediante JWT (JSON Web Tokens) para validaci贸n de tokens
 builder.Services.AddAuthentication().AddJwtBearer(opciones =>
 {
     opciones.MapInboundClaims = false; // Desactiva el mapeo de reclamos (claims) de entrada
 
     opciones.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = false, // No valida el emisor del token
-        ValidateAudience = false, // No valida la audiencia del token
-        ValidateLifetime = false, // No valida la expiraci髇 del token
-        ValidateIssuerSigningKey = false, // No valida la clave de firma del emisor
-        IssuerSigningKey =
-            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                builder.Configuration["llavejwt"]!)), // Crea una clave de seguridad sim閠rica para validar la firma del token
-        ClockSkew = TimeSpan.Zero, // Define el tiempo de desfase permitido para la validaci髇 de tiempo (sin desfase)
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["llavejwt"]!)),
+        ClockSkew = TimeSpan.Zero,
     };
+
 });
 
 
@@ -90,11 +93,25 @@ builder.Services.AddSwaggerGen(opciones =>
 {
     opciones.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Name = "Aithorization",
-        Type = SecuritySchemeType.ApiKey,
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
-        BearerFormat = "JWT",
         In = ParameterLocation.Header,
+        BearerFormat = "JWT"
+    });
+
+    opciones.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+     {  new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            }
+        },
+        new List<string>()
+    }
     });
 
     opciones.OperationFilter<FiltroAutorizacion>();
@@ -104,17 +121,17 @@ builder.Services.AddSwaggerGen(opciones =>
 
 
 
-// Construye la aplicaci髇
+// Construye la aplicaci贸n
 var app = builder.Build();
 
-// 羠ea de middlewares: c骴igo que se ejecuta en la pipeline de solicitudes HTTP
+// 脕rea de middlewares: c贸digo que se ejecuta en la pipeline de solicitudes HTTP
 
-// Middleware personalizado para bloquear acceso a la ruta "/bloqueado" con un c骴igo de estado 403 (Acceso Denegado)
+// Middleware personalizado para bloquear acceso a la ruta "/bloqueado" con un c贸digo de estado 403 (Acceso Denegado)
 app.Use(async (contexto, next) =>
 {
     if (contexto.Request.Path == "/bloqueado")
     {
-        contexto.Response.StatusCode = 403; // Establece el c骴igo de estado 403 (Acceso Denegado)
+        contexto.Response.StatusCode = 403; // Establece el c贸digo de estado 403 (Acceso Denegado)
         await contexto.Response.WriteAsync("Acceso denegado"); // Envia un mensaje de acceso denegado al usuario
     }
     else
@@ -135,11 +152,14 @@ app.Use(async (contexto, next) =>
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseStaticFiles();
 
 app.UseCors();
 
-// Mapea las rutas de los controladores para que la aplicaci髇 sepa c髆o manejarlas
+app.UseOutputCache();
+
+// Mapea las rutas de los controladores para que la aplicaci贸n sepa c贸mo manejarlas
 app.MapControllers();
 
-// Inicia la aplicaci髇 y comienza a escuchar las solicitudes HTTP
+// Inicia la aplicaci贸n y comienza a escuchar las solicitudes HTTP
 app.Run();

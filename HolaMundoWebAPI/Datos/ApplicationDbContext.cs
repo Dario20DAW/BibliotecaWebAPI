@@ -13,7 +13,8 @@ namespace BibliotecaAPI.Datos
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Autor>().Property(x => x.Nombres).HasMaxLength(150);
+            modelBuilder.Entity<Comentario>().HasQueryFilter(b => !b.EstaBorrado);
+
         }
 
         public DbSet<Autor> Autores { get; set; }

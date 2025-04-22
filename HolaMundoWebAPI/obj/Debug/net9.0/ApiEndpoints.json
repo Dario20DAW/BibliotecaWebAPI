@@ -132,9 +132,29 @@
         "IsRequired": true
       },
       {
-        "Name": "autorCrearDTO",
-        "Type": "BibliotecaAPI.DTOs.AutorCrearDTO",
-        "IsRequired": true
+        "Name": "Foto",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "Nombres",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Apellidos",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Identificacion",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Libros",
+        "Type": "System.Collections.Generic.List\u00601[[BibliotecaAPI.DTOs.LibroCrearDTO, BibliotecaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -172,6 +192,113 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.AutoresController",
+    "Method": "PostConFoto",
+    "RelativePath": "api/autores/con-foto",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Foto",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "Nombres",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Apellidos",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Identificacion",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Libros",
+        "Type": "System.Collections.Generic.List\u00601[[BibliotecaAPI.DTOs.LibroCrearDTO, BibliotecaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.AutoresController",
+    "Method": "Filtrar",
+    "RelativePath": "api/autores/filtrar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "RecordsPorPagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PaginacionDTO.Pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PaginacionDTO.RecordsPorPagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Nombres",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Apellidos",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TieneFoto",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "TieneLibros",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "TituloLibro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "IncluirLibros",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "CampoOrdenar",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrdenAscendente",
+        "Type": "System.Boolean",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -600,6 +727,16 @@
   },
   {
     "ContainingType": "BibliotecaAPI.Controllers.UsuariosController",
+    "Method": "ProbarAuth",
+    "RelativePath": "api/usuarios/probar-auth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.UsuariosController",
     "Method": "Registrar",
     "RelativePath": "api/usuarios/registro",
     "HttpMethod": "POST",
@@ -659,5 +796,15 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controllers.UsuariosController",
+    "Method": "VerClaims",
+    "RelativePath": "api/usuarios/ver-claims",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

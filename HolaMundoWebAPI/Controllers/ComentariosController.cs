@@ -6,6 +6,7 @@ using BibliotecaAPI.Servicios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
 
 namespace BibliotecaAPI.Controllers
@@ -13,7 +14,7 @@ namespace BibliotecaAPI.Controllers
 
     [ApiController]
     [Route("api/libros/{libroId:int}/comentarios")]
-    [Authorize]
+    [Authorize(Policy = "esadmin")]
     public class ComentariosController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -29,7 +30,7 @@ namespace BibliotecaAPI.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [OutputCache]
         public async Task<ActionResult<List<ComentarioDTO>>> Get(int libroId)
         {
             var existeLibro = await context.Libros.AnyAsync(x => x.Id == libroId);
@@ -52,6 +53,7 @@ namespace BibliotecaAPI.Controllers
 
         [HttpGet("{id}", Name = "ObtenerComentario")]
         [AllowAnonymous]
+        [OutputCache]
         public async Task<ActionResult<ComentarioDTO>> Get(Guid id)
         {
             var comentario = await context.Comentarios
@@ -64,6 +66,8 @@ namespace BibliotecaAPI.Controllers
 
             return mapper.Map<ComentarioDTO>(comentario);
         }
+
+
 
         [HttpPost]
         public async Task<ActionResult> Post(int libroId, ComentarioCrearDTO comentarioCrearDTO)
@@ -178,9 +182,9 @@ namespace BibliotecaAPI.Controllers
                 return Forbid();
             }
 
-            context.Remove(comentarioDB);
+            comentarioDB.EstaBorrado = true;
+            context.Update(comentarioDB);
             await context.SaveChangesAsync();
-
 
             return NoContent();
         }

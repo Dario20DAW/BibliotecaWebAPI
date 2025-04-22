@@ -8,22 +8,16 @@ namespace BibliotecaAPI.Swagger
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
+            // Verifica si el endpoint requiere autorización
             if (!context.ApiDescription.ActionDescriptor.EndpointMetadata
                 .OfType<AuthorizeAttribute>().Any())
             {
                 return;
             }
 
-            if (!context.ApiDescription.ActionDescriptor.EndpointMetadata
-                .OfType<AllowAnonymousAttribute>().Any())
-            {
-                return;
-            }
-
-
             operation.Security = new List<OpenApiSecurityRequirement>
-            {
-                new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityRequirement {
                 {
                     new OpenApiSecurityScheme
                     {
@@ -34,10 +28,10 @@ namespace BibliotecaAPI.Swagger
                         }
                     },
                     new string[]{}
-                    }
                 }
-            };
-
+            }
+        };
         }
     }
+
 }

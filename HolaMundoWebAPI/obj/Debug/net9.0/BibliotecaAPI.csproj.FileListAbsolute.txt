@@ -176,3 +176,8 @@ C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\S
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\BibliotecaAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\Azure.Storage.Blobs.dll
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\Azure.Storage.Common.dll
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\System.IO.Hashing.dll
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\BibliotecaAPI.staticwebassets.runtime.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\System.Linq.Dynamic.Core.dll

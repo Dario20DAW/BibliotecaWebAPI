@@ -1,0 +1,16 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/BibliotecaAPI/autores/7521350e-0214-48d6-8934-a44f6873b179.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\autores\7521350e-0214-48d6-8934-a44f6873b179.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-WvecanI612fkwP9w6NEoX\u002BNo7hTNrtclHy/UGoMpWHk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"6518"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022WvecanI612fkwP9w6NEoX\u002BNo7hTNrtclHy/UGoMpWHk=\u0022"},{"Name":"Last-Modified","Value":"Tue, 22 Apr 2025 08:44:22 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BibliotecaAPI/autores/7521350e-0214-48d6-8934-a44f6873b179.m44jlat4zc.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\autores\7521350e-0214-48d6-8934-a44f6873b179.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"m44jlat4zc"},{"Name":"integrity","Value":"sha256-WvecanI612fkwP9w6NEoX\u002BNo7hTNrtclHy/UGoMpWHk="},{"Name":"label","Value":"_content/BibliotecaAPI/autores/7521350e-0214-48d6-8934-a44f6873b179.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"6518"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022WvecanI612fkwP9w6NEoX\u002BNo7hTNrtclHy/UGoMpWHk=\u0022"},{"Name":"Last-Modified","Value":"Tue, 22 Apr 2025 08:44:22 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>

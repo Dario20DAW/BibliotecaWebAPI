@@ -81,6 +81,9 @@ namespace BibliotecaAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("EstaBorrado")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("FechaPublicacion")
                         .HasColumnType("datetime2");
 

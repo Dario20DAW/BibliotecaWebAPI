@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\wwwroot\\autores\\7521350e-0214-48d6-8934-a44f6873b179.jpg",
+      "PackagePath": "staticwebassets\\autores\\7521350e-0214-48d6-8934-a44f6873b179.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.BibliotecaAPI.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.BibliotecaAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.BibliotecaAPI.props",
+      "PackagePath": "build\\BibliotecaAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.BibliotecaAPI.props",
+      "PackagePath": "buildMultiTargeting\\BibliotecaAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.BibliotecaAPI.props",
+      "PackagePath": "buildTransitive\\BibliotecaAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
