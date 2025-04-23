@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BibliotecaAPI.Controllers
+namespace BibliotecaAPI.Controllers.V2
 {
 
-    [Route("api/seguridad")]
+    [Route("api/v2/seguridad")]
     [ApiController]
     public class SeguridadController : ControllerBase
     {

@@ -12,10 +12,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BibliotecaAPI.Controllers
+namespace BibliotecaAPI.Controllers.V2
 {
     [ApiController]
-    [Route("api/usuarios")]
+    [Route("api/v2/usuarios")]
     public class UsuariosController : ControllerBase
     {
         // Inyección de dependencias necesarias para gestión de usuarios, autenticación, mapeo, etc.

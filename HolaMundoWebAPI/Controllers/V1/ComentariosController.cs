@@ -9,28 +9,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
 
-namespace BibliotecaAPI.Controllers
+namespace BibliotecaAPI.Controllers.V1
 {
 
     [ApiController]
-    [Route("api/libros/{libroId:int}/comentarios")]
+    [Route("api/v1/libros/{libroId:int}/comentarios")]
     [Authorize(Policy = "esadmin")]
     public class ComentariosController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
         private readonly IServicioUsuarios servicioUsuarios;
+        private readonly IOutputCacheStore _cacheStore;
+        private const string cache = "comentarios-obtener";
 
         public ComentariosController(ApplicationDbContext context, IMapper mapper,
-            IServicioUsuarios servicioUsuarios)
+            IServicioUsuarios servicioUsuarios, IOutputCacheStore cacheStore)
         {
             this.context = context;
             this.mapper = mapper;
             this.servicioUsuarios = servicioUsuarios;
+            _cacheStore = cacheStore;
         }
 
-        [HttpGet]
-        [OutputCache]
+        [HttpGet(Name = "ObtenerComentariosV1")]
+        [OutputCache(Tags = [cache])]
         public async Task<ActionResult<List<ComentarioDTO>>> Get(int libroId)
         {
             var existeLibro = await context.Libros.AnyAsync(x => x.Id == libroId);
@@ -51,9 +54,9 @@ namespace BibliotecaAPI.Controllers
         }
 
 
-        [HttpGet("{id}", Name = "ObtenerComentario")]
+        [HttpGet("{id}", Name = "ObtenerComentarioV1")]
         [AllowAnonymous]
-        [OutputCache]
+        [OutputCache(Tags = [cache])]
         public async Task<ActionResult<ComentarioDTO>> Get(Guid id)
         {
             var comentario = await context.Comentarios
@@ -69,7 +72,7 @@ namespace BibliotecaAPI.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost(Name = "CrearComentarioV1")]
         public async Task<ActionResult> Post(int libroId, ComentarioCrearDTO comentarioCrearDTO)
         {
             var existeLibro = await context.Libros.AnyAsync(x => x.Id == libroId);
@@ -93,14 +96,16 @@ namespace BibliotecaAPI.Controllers
 
             context.Add(comentario);
             await  context.SaveChangesAsync();
+            await _cacheStore.EvictByTagAsync(cache, default);
+
 
             var comentarioDTO = mapper.Map<ComentarioDTO>(comentario);
-            return CreatedAtRoute("ObtenerComentario", new { id = comentario.id, libroId }, comentarioDTO);
+            return CreatedAtRoute("ObtenerComentarioV1", new { id = comentario.id, libroId }, comentarioDTO);
 
         }
 
 
-        [HttpPatch("{id}")]
+        [HttpPatch("{id}", Name = "PatchComentarioV1")]
         public async Task<ActionResult> Patch(Guid id, int libroId,  JsonPatchDocument<ComentarioPatchDTO> patchDoc)
         {
             if (patchDoc is null)
@@ -146,12 +151,14 @@ namespace BibliotecaAPI.Controllers
 
             mapper.Map(comentarioPatchDTO, comentarioDb);
             await context.SaveChangesAsync();
+            await _cacheStore.EvictByTagAsync(cache, default);
+
 
             return NoContent();
         }
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name ="BorrarComentarioV1")]
         public async Task<ActionResult> Delete(Guid id, int libroId)
         {
             var existeLibro = await context.Libros.AnyAsync(x => x.Id == libroId);
@@ -185,6 +192,8 @@ namespace BibliotecaAPI.Controllers
             comentarioDB.EstaBorrado = true;
             context.Update(comentarioDB);
             await context.SaveChangesAsync();
+            await _cacheStore.EvictByTagAsync(cache, default);
+
 
             return NoContent();
         }

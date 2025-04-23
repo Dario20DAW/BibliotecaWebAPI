@@ -103,6 +103,27 @@ namespace BibliotecaAPI.Migrations
                     b.ToTable("Comentarios");
                 });
 
+            modelBuilder.Entity("BibliotecaAPI.Entidades.Error", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MensajeDeError")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StrackTrace")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Errores");
+                });
+
             modelBuilder.Entity("BibliotecaAPI.Entidades.Libro", b =>
                 {
                     b.Property<int>("Id")

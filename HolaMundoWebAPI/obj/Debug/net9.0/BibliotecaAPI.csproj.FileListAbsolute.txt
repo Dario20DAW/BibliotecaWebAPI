@@ -181,3 +181,7 @@ C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\A
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\System.IO.Hashing.dll
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\BibliotecaAPI.staticwebassets.runtime.json
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\System.Linq.Dynamic.Core.dll
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\Microsoft.AspNetCore.OutputCaching.StackExchangeRedis.dll
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\Pipelines.Sockets.Unofficial.dll
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\bin\Debug\net9.0\StackExchange.Redis.dll

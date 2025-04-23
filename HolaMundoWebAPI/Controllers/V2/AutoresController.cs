@@ -4,6 +4,7 @@ using BibliotecaAPI.DTOs;
 using BibliotecaAPI.Entidades;
 using BibliotecaAPI.Migrations;
 using BibliotecaAPI.Servicios;
+using BibliotecaAPI.Servicios.V1;
 using BibliotecaAPI.Utilidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
@@ -13,14 +14,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel;
 using System.Linq.Dynamic.Core;
-namespace BibliotecaAPI.Controllers
+namespace BibliotecaAPI.Controllers.V2
 {
 
 
     [ApiController]
-    [Route("api/autores")]
+    [Route("api/v2/autores")]
     [Authorize(Policy = "esadmin")]
-
+    [FiltroAgregarCabeceras("controlador", "autores")]
     public class AutoresController: ControllerBase
     {
 
@@ -28,16 +29,20 @@ namespace BibliotecaAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IAlmacenadorArchivos almacenadorArchivos;
         private readonly ILogger<AutoresController> _logger;
-        private readonly IOutputCacheStore outputCacheStore;
+        private readonly IOutputCacheStore _cacheStore;
+        private readonly IServicioAutores serivicioAutoresV1;
         private const string contenedor = "autores";
         private const string cache = "autores-obtener";
 
         public AutoresController(ApplicationDbContext context, IMapper mapper,
-            IAlmacenadorArchivos almacenadorArchivos, ILogger<AutoresController> logger)
+            IAlmacenadorArchivos almacenadorArchivos, ILogger<AutoresController> logger,
+            IOutputCacheStore cacheStore, IServicioAutores serivicioAutoresV1)
         {
             _context = context;
             _mapper = mapper;
             _logger = logger;
+            _cacheStore = cacheStore;
+            this.serivicioAutoresV1 = serivicioAutoresV1;
             this.almacenadorArchivos = almacenadorArchivos;
             
         }
@@ -45,36 +50,37 @@ namespace BibliotecaAPI.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [OutputCache]
+        //[OutputCache(Tags = [cache])]
+        [ServiceFilter<MiFiltroDeAccion>()]
+        [FiltroAgregarCabeceras("accion", "obtener-autores")]
         public async Task<IEnumerable<AutorDTO>> Get([FromQuery] PaginacionDTO paginacionDTO)
         {
 
-
-            var queryable =   _context.Autores.AsQueryable();
-            await HttpContext.InsertarParametrosPaginacionEnCabecera(queryable);
-            var autores = await queryable
-                                .OrderBy(x => x.Nombres)
-                                .Paginar(paginacionDTO).ToListAsync();
-            var autoresDTO = _mapper.Map<IEnumerable<AutorDTO>>(autores);
-            return autoresDTO;
+            return await serivicioAutoresV1.Get(paginacionDTO);
         }
 
 
 
-        [HttpGet("{id:int}", Name = "ObtenerAutor")]
+        [HttpGet("{id:int}", Name = "ObtenerAutorV2")]
         [AllowAnonymous]
         [EndpointSummary("Obtiene autor por Id")]
         [EndpointDescription("Obtiene autor por id y sus libros, si no existe se devuelve 404")]
         [ProducesResponseType<AutorConLibrosDTO>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [OutputCache]
+        [OutputCache(Tags = [cache])]
         public async Task<ActionResult<AutorConLibrosDTO>> Get(
-            [Description("El id de autor")]int id)
+            [Description("El id de autor")]int id, bool incluirLibros = false)
         {
-            var autor = await _context.Autores
-                .Include(x => x.Libros)
-                .ThenInclude(x => x.Libro)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var queryable =  _context.Autores.AsQueryable();
+
+
+            if (incluirLibros) { 
+                queryable = queryable.Include(x => x.Libros)
+                .ThenInclude(x => x.Libro);
+
+            }
+
+            var autor = await queryable.FirstOrDefaultAsync(x => x.Id == id);
 
             if (autor == null) { 
             
@@ -182,9 +188,10 @@ namespace BibliotecaAPI.Controllers
             var autor = _mapper.Map<Autor>(autorCrearDTO);  
             _context.Add(autor);
             await _context.SaveChangesAsync();
+            await _cacheStore.EvictByTagAsync(cache, default);
             var autorDTO = _mapper.Map<AutorDTO>(autor);
 
-            return CreatedAtRoute("ObtenerAutor", new {id = autor.Id}, autorDTO);
+            return CreatedAtRoute("ObtenerAutorV2", new {id = autor.Id}, autorDTO);
          }
 
 
@@ -203,9 +210,11 @@ namespace BibliotecaAPI.Controllers
             
             _context.Add(autor);
             await _context.SaveChangesAsync();
+            await _cacheStore.EvictByTagAsync(cache, default);
+
             var autorDTO = _mapper.Map<AutorDTO>(autor);
 
-            return CreatedAtRoute("ObtenerAutor", new { id = autor.Id }, autorDTO);
+            return CreatedAtRoute("ObtenerAutorV2", new { id = autor.Id }, autorDTO);
         }
 
 
@@ -237,6 +246,8 @@ namespace BibliotecaAPI.Controllers
 
             _context.Update(autor);
             await _context.SaveChangesAsync();
+            await _cacheStore.EvictByTagAsync(cache, default);
+
             return NoContent();
         }
 
@@ -269,6 +280,7 @@ namespace BibliotecaAPI.Controllers
             }
             _mapper.Map(autorPatch, autorDb);
             await _context.SaveChangesAsync();
+            await _cacheStore.EvictByTagAsync(cache, default);
 
             return NoContent();
         }
@@ -287,6 +299,8 @@ namespace BibliotecaAPI.Controllers
 
             _context.Remove(autor);
             await _context.SaveChangesAsync();
+            await _cacheStore.EvictByTagAsync(cache, default);
+
             await almacenadorArchivos.Borrar(autor.Foto, contenedor);
 
             return NoContent(); 

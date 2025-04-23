@@ -5,12 +5,21 @@ using BibliotecaAPI.Datos;
 using BibliotecaAPI.Entidades;
 using BibliotecaAPI.Servicios;
 using BibliotecaAPI.Swagger;
+using BibliotecaAPI.Utilidades;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
+builder.Services.AddStackExchangeRedisOutputCache(opciones =>
+{
+    opciones.Configuration = builder.Configuration.GetConnectionString("redis");
+});
 
 builder.Services.AddDataProtection();
 builder.Services.AddOutputCache(opciones =>
@@ -32,7 +41,11 @@ builder.Services.AddCors(opciones  =>
 });
 
 // Configura el servicio para usar controladores y agregar soporte para NewtonsoftJson (JSON más flexible)
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers(opciones =>
+{
+    opciones.Filters.Add<FiltroTiempoEjecucion>();
+    opciones.Conventions.Add(new ConvencionAgrupaPorVersion());
+}).AddNewtonsoftJson();
 
 
 
@@ -60,6 +73,9 @@ builder.Services.AddScoped<SignInManager<Usuario>>(); // Gestiona el inicio de s
 builder.Services.AddTransient<IServicioUsuarios, ServicioUsuarios>();
 builder.Services.AddTransient<IServicioHash, ServicioHash>();
 builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosLocal>();
+builder.Services.AddScoped<MiFiltroDeAccion>();
+builder.Services.AddScoped<BibliotecaAPI.Servicios.V1.IServicioAutores, BibliotecaAPI.Servicios.V1.ServicioAutores>();
+
 
 
 builder.Services.AddHttpContextAccessor(); // Proporciona acceso al contexto HTTP en cualquier parte de la aplicación
@@ -89,8 +105,27 @@ builder.Services.AddAuthorization(opciones =>
 });
 
 
+builder.Services.AddEndpointsApiExplorer();
+
+
 builder.Services.AddSwaggerGen(opciones =>
 {
+    opciones.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Biblioteca API",
+        Description = "Este es un web api para trabajar con datos de autores y libros",
+
+    });
+
+    opciones.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Version = "v2",
+        Title = "Biblioteca API",
+        Description = "Este es un web api para trabajar con datos de autores y libros",
+
+    });
+
     opciones.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -149,8 +184,36 @@ app.Use(async (contexto, next) =>
 });
 
 
+app.UseExceptionHandler(exceptionHandlerApp => exceptionHandlerApp.Run(async context =>
+{
+    var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
+    var excepcion = exceptionHandlerFeature?.Error!;
+
+    var error = new Error()
+    {
+        MensajeDeError = excepcion.Message,
+        StrackTrace = excepcion.StackTrace,
+        Fecha = DateTime.UtcNow
+    };
+
+    var dbContext = context.RequestServices.GetRequiredService<ApplicationDbContext>();
+    dbContext.Add(error);
+    await dbContext.SaveChangesAsync();
+    await Results.InternalServerError(new
+    {
+        tipo = "error",
+        mensaje = "Ha ocurrido un error inesperado",
+        estatus = 500
+    }).ExecuteAsync(context);
+}));
+
+
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(opciones =>
+{
+    opciones.SwaggerEndpoint("/swagger/v1/swagger.json", "Biblioteca API V1");
+    opciones.SwaggerEndpoint("/swagger/v2/swagger.json", "Biblioteca API V2");
+});
 
 app.UseStaticFiles();
 

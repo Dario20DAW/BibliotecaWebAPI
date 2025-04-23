@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
 
-namespace BibliotecaAPI.Controllers
+namespace BibliotecaAPI.Controllers.V1
 {
 
 
     [ApiController]
-    [Route("api/libros")]
+    [Route("api/v1/libros")]
     [Authorize(Policy = "esadmin")]
 
     public class LibrosController : ControllerBase
@@ -22,32 +22,37 @@ namespace BibliotecaAPI.Controllers
 
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IOutputCacheStore _cacheStore;
         private readonly ITimeLimitedDataProtector protectorLimitado;
+        private const string cache = "libros-obtener";
+
+
 
         public LibrosController(ApplicationDbContext context, IMapper mapper,
-            IDataProtectionProvider protectionProvider)
+            IDataProtectionProvider protectionProvider, IOutputCacheStore cacheStore)
         {
             _context = context;
             _mapper = mapper;
+            _cacheStore = cacheStore;
             protectorLimitado = protectionProvider.CreateProtector("LibrosController")
                 .ToTimeLimitedDataProtector();
         }
 
 
-        [HttpGet("listado/obtener-token")]
+        [HttpGet("listado/obtener-token", Name ="ObtenerTokenV1")]
         public ActionResult ObtenerTokenListado()
         {
             var textoPlan = Guid.NewGuid().ToString();
             var token = protectorLimitado.Protect(textoPlan, lifetime: 
                 TimeSpan.FromSeconds(30));
 
-            var url = Url.RouteUrl("ObtenerListadoLibrosUsandoToken", new { token }, "https");
+            var url = Url.RouteUrl("ObtenerListadoLibrosUsandoTokenV1", new { token }, "https");
 
             return Ok(new { url });
         }
 
 
-        [HttpGet("listado/{token}", Name = "ObtenerListadoLibrosUsandoToken")]
+        [HttpGet("listado/{token}", Name = "ObtenerListadoLibrosUsandoTokenV1")]
         [AllowAnonymous]
 
         public async Task<ActionResult> ObtenerListadoUsandoToken(string token)
@@ -72,9 +77,9 @@ namespace BibliotecaAPI.Controllers
 
 
 
-        [HttpGet]
+        [HttpGet(Name = "ObtenerLibrosV1")]
         [AllowAnonymous]
-        [OutputCache]
+        [OutputCache(Tags = [cache])]
         public async Task<IEnumerable<LibroDTO>> Get([FromQuery] PaginacionDTO paginacionDTO)
         {
             
@@ -91,8 +96,9 @@ namespace BibliotecaAPI.Controllers
         }
 
 
-        [HttpGet("{id:int}", Name = "ObtenerLibro")]
+        [HttpGet("{id:int}", Name = "ObtenerLibroV1")]
         [AllowAnonymous]
+        [OutputCache(Tags = [cache])]
         public async Task<ActionResult<LibroConAutoresDTO>> Get(int id)
         {
             var libro = await _context.Libros
@@ -111,7 +117,7 @@ namespace BibliotecaAPI.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CrearLibroV1")]
         public async Task<ActionResult> Post(LibroCrearDTO libroCrearDTO)
         {
             //validar que se envien autores
@@ -143,11 +149,13 @@ namespace BibliotecaAPI.Controllers
 
             _context.Libros.Add(libro);
             await _context.SaveChangesAsync();
+            await _cacheStore.EvictByTagAsync(cache, default);
+
 
             var libroDTO = _mapper.Map<LibroDTO>(libro);
 
 
-            return CreatedAtRoute("ObtenerLibro", new { id = libro.Id }, libroDTO);
+            return CreatedAtRoute("ObtenerLibroV1", new { id = libro.Id }, libroDTO);
         }
 
 
@@ -165,7 +173,7 @@ namespace BibliotecaAPI.Controllers
 
 
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:int}", Name = "ActualizarLibroV1")]
         public async Task<ActionResult> Put(int id, LibroCrearDTO libroCrearDTO)
         {
             //validar que se envien autores
@@ -211,13 +219,15 @@ namespace BibliotecaAPI.Controllers
 
 
             await _context.SaveChangesAsync();
+            await _cacheStore.EvictByTagAsync(cache, default);
+
             return Ok();
 
         }
 
 
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id:int}", Name = "BorrarLibroV1")]
         public async Task<ActionResult> Delete(int id)
         {
             var registrosBorrados = await _context.Libros.Where(x => x.Id == id).ExecuteDeleteAsync();
@@ -226,6 +236,8 @@ namespace BibliotecaAPI.Controllers
             {
                 return NotFound();
             }
+
+            await _cacheStore.EvictByTagAsync(cache, default);
             return Ok();
         }
 

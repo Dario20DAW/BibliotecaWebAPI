@@ -24,6 +24,8 @@ namespace BibliotecaAPI.Datos
 
         public DbSet<AutorLibro> AutoresLibros { get; set; }
 
+        public DbSet<Error> Errores { get; set; }
+
 
         protected ApplicationDbContext()
         {
