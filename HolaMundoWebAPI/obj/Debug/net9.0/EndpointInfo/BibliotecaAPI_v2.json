@@ -1579,6 +1579,13 @@
         ],
         "type": "object",
         "properties": {
+          "enlaces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DatosHATEOASDTO"
+            },
+            "nullable": true
+          },
           "id": {
             "type": "integer",
             "format": "int32"
@@ -1633,6 +1640,13 @@
         ],
         "type": "object",
         "properties": {
+          "enlaces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DatosHATEOASDTO"
+            },
+            "nullable": true
+          },
           "id": {
             "type": "integer",
             "format": "int32"
@@ -1707,6 +1721,24 @@
           "password": {
             "minLength": 1,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatosHATEOASDTO": {
+        "type": "object",
+        "properties": {
+          "enlace": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "metodo": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

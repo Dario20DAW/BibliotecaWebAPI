@@ -6,6 +6,7 @@ using BibliotecaAPI.Migrations;
 using BibliotecaAPI.Servicios;
 using BibliotecaAPI.Servicios.V1;
 using BibliotecaAPI.Utilidades;
+using BibliotecaAPI.Utilidades.V1;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,7 @@ namespace BibliotecaAPI.Controllers.V1
 
     [ApiController]
     [Route("api/v1/autores")]
-    [Authorize(Policy = "esadmin")]
-    [FiltroAgregarCabeceras("controlador", "autores")]
-    public class AutoresController: ControllerBase
+    [Authorize(Policy = "esadmin")]    public class AutoresController: ControllerBase
     {
 
         private readonly ApplicationDbContext _context;
@@ -50,13 +49,16 @@ namespace BibliotecaAPI.Controllers.V1
 
         [HttpGet(Name = "ObtenerAutoresV1")]
         [AllowAnonymous]
-        //[OutputCache(Tags = [cache])]
-        [ServiceFilter<MiFiltroDeAccion>()]
-        [FiltroAgregarCabeceras("accion", "obtener-autores")]
-        public async Task<IEnumerable<AutorDTO>> Get([FromQuery] PaginacionDTO paginacionDTO)
+        [OutputCache(Tags = [cache])]
+        [ServiceFilter<HATEOASAutoresAttribute>()]
+        public async Task<IEnumerable<AutorDTO>>
+            Get([FromQuery] PaginacionDTO paginacionDTO)
         {
 
-            return await servicioAutoresV1.Get(paginacionDTO);
+           return await servicioAutoresV1.Get(paginacionDTO);
+
+            
+            
         }
 
 
@@ -68,6 +70,7 @@ namespace BibliotecaAPI.Controllers.V1
         [ProducesResponseType<AutorConLibrosDTO>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [OutputCache(Tags = [cache])]
+        [ServiceFilter<HATEOASAutorAttribute>()]
         public async Task<ActionResult<AutorConLibrosDTO>> Get(
             [Description("El id de autor")]int id)
         {
@@ -85,12 +88,6 @@ namespace BibliotecaAPI.Controllers.V1
 
             return autorDTO;
         }
-
-
-        //public void GenerarEnlaces(AutorDTO autorDTO)
-        //{
-        //    autorDTO.Enla
-        //}
 
 
         [HttpGet("filtrar", Name = "FiltrarAutoresV1")]

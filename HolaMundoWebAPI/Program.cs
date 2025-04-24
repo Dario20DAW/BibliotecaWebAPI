@@ -6,6 +6,7 @@ using BibliotecaAPI.Entidades;
 using BibliotecaAPI.Servicios;
 using BibliotecaAPI.Swagger;
 using BibliotecaAPI.Utilidades;
+using BibliotecaAPI.Utilidades.V1;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,15 +17,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-builder.Services.AddStackExchangeRedisOutputCache(opciones =>
-{
-    opciones.Configuration = builder.Configuration.GetConnectionString("redis");
-});
+//builder.Services.AddStackExchangeRedisOutputCache(opciones =>
+//{
+//    opciones.Configuration = builder.Configuration.GetConnectionString("redis");
+//});
 
 builder.Services.AddDataProtection();
 builder.Services.AddOutputCache(opciones =>
 {
-    opciones.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(15);
+    opciones.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(60);
 });
         
 
@@ -43,7 +44,6 @@ builder.Services.AddCors(opciones  =>
 // Configura el servicio para usar controladores y agregar soporte para NewtonsoftJson (JSON más flexible)
 builder.Services.AddControllers(opciones =>
 {
-    opciones.Filters.Add<FiltroTiempoEjecucion>();
     opciones.Conventions.Add(new ConvencionAgrupaPorVersion());
 }).AddNewtonsoftJson();
 
@@ -73,8 +73,12 @@ builder.Services.AddScoped<SignInManager<Usuario>>(); // Gestiona el inicio de s
 builder.Services.AddTransient<IServicioUsuarios, ServicioUsuarios>();
 builder.Services.AddTransient<IServicioHash, ServicioHash>();
 builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosLocal>();
-builder.Services.AddScoped<MiFiltroDeAccion>();
 builder.Services.AddScoped<BibliotecaAPI.Servicios.V1.IServicioAutores, BibliotecaAPI.Servicios.V1.ServicioAutores>();
+
+builder.Services.AddScoped<BibliotecaAPI.Servicios.V1.IGeneradorEnlaces, BibliotecaAPI.Servicios.V1.GeneradorEnlaces>();
+
+builder.Services.AddScoped<HATEOASAutorAttribute>();
+builder.Services.AddScoped<HATEOASAutoresAttribute>();
 
 
 
