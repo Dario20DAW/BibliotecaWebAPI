@@ -250,3 +250,5 @@ C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\BibliotecaAPITest\obj\Debug\net9.0
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\BibliotecaAPITest\obj\Debug\net9.0\BibliotecaAPITest.genruntimeconfig.cache
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\BibliotecaAPITest\obj\Debug\net9.0\ref\BibliotecaAPITest.dll
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\BibliotecaAPITest\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\BibliotecaAPITest\bin\Debug\net9.0\Castle.Core.dll
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\BibliotecaAPITest\bin\Debug\net9.0\NSubstitute.dll

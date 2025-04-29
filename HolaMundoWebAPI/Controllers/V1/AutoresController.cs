@@ -214,36 +214,42 @@ namespace BibliotecaAPI.Controllers.V1
         }
 
 
-        [HttpPut("{id:int}", Name ="ActualizarAutorV1")]
+        [HttpPut("{id:int}", Name = "ActualizarAutorV1")]
         public async Task<ActionResult> Put(int id, [FromForm] AutorCrearFotoDTO autorCrearDTO)
         {
+            // Comprobar si el autor existe en la base de datos
             var existeAutor = await _context.Autores.AnyAsync(x => x.Id == id);
 
-            if (existeAutor) 
+            // Si no existe, devolver NotFound
+            if (!existeAutor)
             {
                 return NotFound();
             }
 
-
+            // Mapear el DTO al modelo de entidad
             var autor = _mapper.Map<Autor>(autorCrearDTO);
-            autor.Id = id;
+            autor.Id = id; // Establecer el ID del autor
 
+            // Si se ha enviado una nueva foto, procesarla
             if (autorCrearDTO.Foto != null)
             {
                 var fotoActual = await _context
-                                .Autores.Where(x => x.Id == id)
-                                .Select(x => x.Foto).FirstAsync();
-                var url = await almacenadorArchivos.Editar(fotoActual,contenedor, autorCrearDTO.Foto);
-                autor.Foto = url;
+                                    .Autores.Where(x => x.Id == id)
+                                    .Select(x => x.Foto).FirstOrDefaultAsync();
 
+                // Si ya tiene foto, editarla; si no, almacenarla como nueva
+                var url = await almacenadorArchivos.Editar(fotoActual, contenedor, autorCrearDTO.Foto);
+                autor.Foto = url;
             }
 
-
-
+            // Actualizar el autor en la base de datos
             _context.Update(autor);
             await _context.SaveChangesAsync();
+
+            // Invalidar el caché correspondiente
             await _cacheStore.EvictByTagAsync(cache, default);
 
+            // Retornar NoContent si todo fue bien
             return NoContent();
         }
 

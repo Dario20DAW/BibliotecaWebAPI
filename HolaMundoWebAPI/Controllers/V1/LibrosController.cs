@@ -22,7 +22,7 @@ namespace BibliotecaAPI.Controllers.V1
 
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IOutputCacheStore _cacheStore;
+        private readonly IOutputCacheStore _outputCacheStore;
         private readonly ITimeLimitedDataProtector protectorLimitado;
         private const string cache = "libros-obtener";
 
@@ -33,10 +33,9 @@ namespace BibliotecaAPI.Controllers.V1
         {
             _context = context;
             _mapper = mapper;
-            _cacheStore = cacheStore;
-            protectorLimitado = protectionProvider.CreateProtector("LibrosController")
-                .ToTimeLimitedDataProtector();
+            _outputCacheStore = cacheStore;
         }
+
 
 
         [HttpGet("listado/obtener-token", Name ="ObtenerTokenV1")]
@@ -149,7 +148,7 @@ namespace BibliotecaAPI.Controllers.V1
 
             _context.Libros.Add(libro);
             await _context.SaveChangesAsync();
-            await _cacheStore.EvictByTagAsync(cache, default);
+            await _outputCacheStore.EvictByTagAsync(cache, default);
 
 
             var libroDTO = _mapper.Map<LibroDTO>(libro);
@@ -219,7 +218,7 @@ namespace BibliotecaAPI.Controllers.V1
 
 
             await _context.SaveChangesAsync();
-            await _cacheStore.EvictByTagAsync(cache, default);
+            await _outputCacheStore.EvictByTagAsync(cache, default);
 
             return Ok();
 
@@ -237,7 +236,7 @@ namespace BibliotecaAPI.Controllers.V1
                 return NotFound();
             }
 
-            await _cacheStore.EvictByTagAsync(cache, default);
+            await _outputCacheStore.EvictByTagAsync(cache, default);
             return Ok();
         }
 
