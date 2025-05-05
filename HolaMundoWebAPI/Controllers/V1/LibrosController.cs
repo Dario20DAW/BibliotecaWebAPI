@@ -24,6 +24,8 @@ namespace BibliotecaAPI.Controllers.V1
         private readonly IMapper _mapper;
         private readonly IOutputCacheStore _outputCacheStore;
         private readonly ITimeLimitedDataProtector protectorLimitado;
+        private ApplicationDbContext context;
+        private IOutputCacheStore outputCacheStore;
         private const string cache = "libros-obtener";
 
 
@@ -36,7 +38,12 @@ namespace BibliotecaAPI.Controllers.V1
             _outputCacheStore = cacheStore;
         }
 
-
+        public LibrosController(ApplicationDbContext context, IMapper mapper, IOutputCacheStore outputCacheStore)
+        {
+            this.context = context;
+            _mapper = mapper;
+            this.outputCacheStore = outputCacheStore;
+        }
 
         [HttpGet("listado/obtener-token", Name ="ObtenerTokenV1")]
         public ActionResult ObtenerTokenListado()

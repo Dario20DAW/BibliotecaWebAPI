@@ -230,3 +230,6 @@ app.MapControllers();
 
 // Inicia la aplicación y comienza a escuchar las solicitudes HTTP
 app.Run();
+
+
+public partial class Program { }

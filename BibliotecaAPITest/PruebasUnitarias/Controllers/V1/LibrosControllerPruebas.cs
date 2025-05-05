@@ -1,7 +1,7 @@
 ﻿using BibliotecaAPI.Controllers.V1;
 using BibliotecaAPI.DTOs;
-using BibliotecaAPITest.PruebasUnitarias.Utilidades;
-using BibliotecaAPITests.Utilidades;
+using BibliotecaAPITest.Utilidades;
+using BibliotecaAPITests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.OutputCaching;
 using System;

@@ -1,0 +1,137 @@
+{
+  "Version": 1,
+  "Hash": "B3RkZ5jpenM0TJ9QZETdjbQEORwpLmLt0zmmxvN2hvE=",
+  "Source": "BibliotecaAPITest",
+  "BasePath": "_content/BibliotecaAPITest",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\BibliotecaAPI.csproj",
+      "Version": 2,
+      "Source": "BibliotecaAPI",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
+    }
+  ],
+  "DiscoveryPatterns": [
+    {
+      "Name": "BibliotecaAPI\\wwwroot",
+      "Source": "BibliotecaAPI",
+      "ContentRoot": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\wwwroot\\",
+      "BasePath": "_content/BibliotecaAPI",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\wwwroot\\autores\\7521350e-0214-48d6-8934-a44f6873b179.jpg",
+      "SourceId": "BibliotecaAPI",
+      "SourceType": "Project",
+      "ContentRoot": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\wwwroot\\",
+      "BasePath": "_content/BibliotecaAPI",
+      "RelativePath": "autores/7521350e-0214-48d6-8934-a44f6873b179#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "m44jlat4zc",
+      "Integrity": "WvecanI612fkwP9w6NEoX+No7hTNrtclHy/UGoMpWHk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\wwwroot\\autores\\7521350e-0214-48d6-8934-a44f6873b179.jpg"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "_content/BibliotecaAPI/autores/7521350e-0214-48d6-8934-a44f6873b179.jpg",
+      "AssetFile": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\wwwroot\\autores\\7521350e-0214-48d6-8934-a44f6873b179.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6518"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WvecanI612fkwP9w6NEoX+No7hTNrtclHy/UGoMpWHk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 22 Apr 2025 08:44:22 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WvecanI612fkwP9w6NEoX+No7hTNrtclHy/UGoMpWHk="
+        }
+      ]
+    },
+    {
+      "Route": "_content/BibliotecaAPI/autores/7521350e-0214-48d6-8934-a44f6873b179.m44jlat4zc.jpg",
+      "AssetFile": "C:\\Users\\T-COBRO\\source\\repos\\HolaMundoWebAPI\\HolaMundoWebAPI\\wwwroot\\autores\\7521350e-0214-48d6-8934-a44f6873b179.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6518"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WvecanI612fkwP9w6NEoX+No7hTNrtclHy/UGoMpWHk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 22 Apr 2025 08:44:22 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "m44jlat4zc"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WvecanI612fkwP9w6NEoX+No7hTNrtclHy/UGoMpWHk="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/BibliotecaAPI/autores/7521350e-0214-48d6-8934-a44f6873b179.jpg"
+        }
+      ]
+    }
+  ]
+}

@@ -2,8 +2,8 @@
 using BibliotecaAPI.DTOs;
 using BibliotecaAPI.Entidades;
 using BibliotecaAPI.Servicios;
-using BibliotecaAPITest.PruebasUnitarias.Utilidades;
-using BibliotecaAPITests.Utilidades;
+using BibliotecaAPITest.Utilidades;
+using BibliotecaAPITests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
