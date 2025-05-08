@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using BibliotecaAPI;
 using BibliotecaAPI.Datos;
+using BibliotecaAPI.DTOs;
 using BibliotecaAPI.Entidades;
 using BibliotecaAPI.Servicios;
 using BibliotecaAPI.Swagger;
@@ -79,6 +80,7 @@ builder.Services.AddScoped<BibliotecaAPI.Servicios.V1.IGeneradorEnlaces, Bibliot
 
 builder.Services.AddScoped<HATEOASAutorAttribute>();
 builder.Services.AddScoped<HATEOASAutoresAttribute>();
+builder.Services.AddScoped<IServicioLlaves, ServicioLlaves>();
 
 
 
@@ -159,6 +161,11 @@ builder.Services.AddSwaggerGen(opciones =>
 });
 
 
+builder.Services.AddOptions<LimitarPeticionesDTO>()
+    .Bind(builder.Configuration.GetSection(LimitarPeticionesDTO.Seccion))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
 
 // Construye la aplicación
 var app = builder.Build();
@@ -222,6 +229,8 @@ app.UseSwaggerUI(opciones =>
 app.UseStaticFiles();
 
 app.UseCors();
+
+app.UseLimitarPeticiones();
 
 app.UseOutputCache();
 

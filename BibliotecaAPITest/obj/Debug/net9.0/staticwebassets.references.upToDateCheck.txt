@@ -1,2 +1,12 @@
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\T-COBRO\source\repos\HolaMundoWebAPI\HolaMundoWebAPI\obj\Debug\net9.0\staticwebassets.build.json

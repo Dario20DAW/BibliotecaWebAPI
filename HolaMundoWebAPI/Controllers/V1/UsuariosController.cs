@@ -6,6 +6,7 @@ using BibliotecaAPI.Datos;
 using BibliotecaAPI.DTOs;
 using BibliotecaAPI.Entidades;
 using BibliotecaAPI.Servicios;
+using BibliotecaAPI.Utilidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,7 @@ namespace BibliotecaAPI.Controllers.V1
 {
     [ApiController]
     [Route("api/v1/usuarios")]
+    [DeshabilitarLimitarPeticiones]
     public class UsuariosController : ControllerBase
     {
         // Inyección de dependencias necesarias para gestión de usuarios, autenticación, mapeo, etc.
@@ -25,13 +27,15 @@ namespace BibliotecaAPI.Controllers.V1
         private readonly IServicioUsuarios servicioUsuarios;
         private readonly ApplicationDbContext dbContext;
         private readonly IMapper mapper;
+        private readonly IServicioLlaves servicioLlaves;
 
         public UsuariosController(UserManager<Usuario> userManager,
             IConfiguration configuration,
             SignInManager<Usuario> signInManager,
             IServicioUsuarios servicioUsuarios,
             ApplicationDbContext dbContext,
-            IMapper mapper)
+            IMapper mapper,
+            IServicioLlaves servicioLlaves)
         {
             this.userManager = userManager;
             this.configuration = configuration;
@@ -39,6 +43,7 @@ namespace BibliotecaAPI.Controllers.V1
             this.servicioUsuarios = servicioUsuarios;
             this.dbContext = dbContext;
             this.mapper = mapper;
+            this.servicioLlaves = servicioLlaves;
         }
 
 
@@ -77,17 +82,18 @@ namespace BibliotecaAPI.Controllers.V1
         public async Task<ActionResult<RespuestaAutenticacionDTO>> Registrar(
             CredencialesUsuarioDTO credencialesUsuarioDTO)
         {
-            var Usuario = new Usuario
+            var usuario = new Usuario
             {
                 UserName = credencialesUsuarioDTO.Email,
                 Email = credencialesUsuarioDTO.Email
             };
 
-            var resultado = await userManager.CreateAsync(Usuario, credencialesUsuarioDTO.Password!);
+            var resultado = await userManager.CreateAsync(usuario, credencialesUsuarioDTO.Password!);
 
             if (resultado.Succeeded)
             {
-                var respuestaAutenticacion = await ConstruirToken(credencialesUsuarioDTO);
+                var respuestaAutenticacion = await ConstruirToken(credencialesUsuarioDTO, usuario.Id);
+                await servicioLlaves.CrearLlave(usuario.Id, TipoLlave.Gratuita);
                 return respuestaAutenticacion;
             }
             else
@@ -119,7 +125,7 @@ namespace BibliotecaAPI.Controllers.V1
 
             if (resultado.Succeeded)
             {
-                return await ConstruirToken(credencialesUsuarioDTO);
+                return await ConstruirToken(credencialesUsuarioDTO, usuario.Id);
             }
             else
             {
@@ -173,7 +179,7 @@ namespace BibliotecaAPI.Controllers.V1
 
             var credencialesUsuarioDTO = new CredencialesUsuarioDTO { Email = usuario.Email! };
 
-            var respuestaAutenticacion = await ConstruirToken(credencialesUsuarioDTO);
+            var respuestaAutenticacion = await ConstruirToken(credencialesUsuarioDTO, usuario.Id);
             return respuestaAutenticacion;
         }
 
@@ -203,11 +209,13 @@ namespace BibliotecaAPI.Controllers.V1
         }
 
         // Método que construye el JWT (token) con claims personalizados.
-        private async Task<RespuestaAutenticacionDTO> ConstruirToken(CredencialesUsuarioDTO credencialesUsuarioDTO)
+        private async Task<RespuestaAutenticacionDTO> ConstruirToken(
+            CredencialesUsuarioDTO credencialesUsuarioDTO, string usuarioId)
         {
             var claims = new List<Claim>
             {
                 new Claim("email", credencialesUsuarioDTO.Email),
+                new Claim("usuarioId", usuarioId)
             };
 
             // Se obtienen los claims del usuario desde la base de datos

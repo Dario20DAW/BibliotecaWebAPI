@@ -605,6 +605,106 @@
     "EndpointName": "ObtenerTokenV1"
   },
   {
+    "ContainingType": "BibliotecaAPI.Controladores.V1.LlavesAPIController",
+    "Method": "Get",
+    "RelativePath": "api/v1/llavesapi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[BibliotecaAPI.DTOs.LlaveDTO, BibliotecaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controladores.V1.LlavesAPIController",
+    "Method": "Post",
+    "RelativePath": "api/v1/llavesapi",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "llaveCreacionDTO",
+        "Type": "BibliotecaAPI.DTOs.LlaveCrearDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controladores.V1.LlavesAPIController",
+    "Method": "Get",
+    "RelativePath": "api/v1/llavesapi/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BibliotecaAPI.DTOs.LlaveDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "ObtenerLlavesV1"
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controladores.V1.LlavesAPIController",
+    "Method": "Put",
+    "RelativePath": "api/v1/llavesapi/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "llaveActualizacionDTO",
+        "Type": "BibliotecaAPI.DTOs.LlaveActualizarDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BibliotecaAPI.Controladores.V1.LlavesAPIController",
+    "Method": "Delete",
+    "RelativePath": "api/v1/llavesapi/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BibliotecaAPI.Controllers.V1.SeguridadController",
     "Method": "Desencriptar",
     "RelativePath": "api/v1/seguridad/desencriptar",
