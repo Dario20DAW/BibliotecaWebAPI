@@ -122,6 +122,13 @@ namespace BibliotecaAPI.Utilidades
                     await httpContext.Response.WriteAsync("Ha excedido el límite de peticiones por día. Si desea realizar más peticiones, actualice su suscripción a una cuenta profesional");
                     return;
                 }
+
+                else if (llaveDB.Usuario!.MalaPaga)
+                {
+                    httpContext.Response.StatusCode = 400;
+                    await httpContext.Response.WriteAsync("El usuario es un mala paga");
+                    return;
+                }
             }
 
             var peticion = new Peticion() { LlaveId = llaveDB.Id, FechaPeticion = DateTime.UtcNow };

@@ -6,6 +6,7 @@ namespace BibliotecaAPI.Entidades
     {
 
         public DateTime FechaNacimiento { get; set; }
+        public bool MalaPaga { get; set; }
 
     }
 }

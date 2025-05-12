@@ -12,6 +12,8 @@ namespace BibliotecaAPI.Utilidades
         {
 
             CreateMap<LlaveAPI, LlaveDTO>();
+            CreateMap<RestriccionDominio, RestriccionDominioDTO>();
+            CreateMap<RestriccionIP, RestriccionIPDTO>();
 
             CreateMap<Autor, AutorDTO>()
                 .ForMember(dto => dto.NombreCompleto,
